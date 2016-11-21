@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block style %}
+  {{ block.super }}
+  #register_form{width:530px;margin:50px auto;}
+  table .field_label{text-align:justify;
+                     width:100px;
+                     font-size:20px;
+                     white-space:pre-wrap;}
+  table td{height:40px;
+           ling-height:40px;
+           }
+  .form_field{width:200px;
+              height:20px;
+              }
+  .field_error{color:red;}
+  .field_info{font-size:14px;}
+  #sbt{width:80px;
+       height:30px;
+       font-size:20px;
+       font-weight:bold;
+       cursor:pointer;}
+{% endblock %}
+
+{% block contentMain %}
+  <form action='' method="post" autocomplete="off" id="register_form" onsubmit="return check_register()">
+    {% csrf_token %}
+    <table>
+      <tr>
+        <td class="field_label">用 户 名：</td>
+        <td class="field" >{{ form.username }}</td>
+        <td class="field_error" id="username_error"></td>
+      </tr>
+      {% if form.username.errors %}
+        {% for error in form.username.errors %}
+          <tr>
+            <td class="field_label"></td>
+            <td colspan=2>{{ error }}</td>
+          </tr>
+        {% endfor %}
+      {% endif %}
+
+      <tr>
+        <td class="field_label">密&nbsp;&nbsp;码：</td>
+        <td class="field" >{{ form.password1 }}</td>
+        <td class="field_error" id="password1_error"></td>
+      </tr>
+      {% if form.password1.errors %}
+        {% for error in form.password1.errors %}
+          <tr>
+            <td class="field_label"></td>
+            <td colspan=2>{{ error }}</td>
+          </tr>
+        {% endfor %}
+      {% endif %}
+
+      <tr>
+        <td class="field_label">确认密码：</td>
+        <td class="field" >{{ form.password2 }}</td>
+        <td class="field_error" id="password2_error"></td>
+      </tr>
+      {% if form.password2.errors %}
+        {% for error in form.password2.errors %}
+          <tr>
+            <td class="field_label"></td>
+            <td colspan=2>{{ error }}</td>
+          </tr>
+        {% endfor %}
+      {% endif %}
+
+      <tr>
+        <td class="field_label">邮&nbsp;&nbsp;箱：</td>
+        <td class="field" >{{ form.email }}</td>
+        <td class="field_error" id="email_error"></td>
+      </tr>
+      {% if form.email.errors %}
+        {% for error in form.email.errors %}
+          <tr>
+            <td class="field_label"></td>
+            <td colspan=2>{{ error }}</td>
+          </tr>
+        {% endfor %}
+      {% endif %}
+
+      <tr>
+      <td></td>
+      <td><input type="submit" value="注册" id='sbt'></td>
+      </tr>
+    </table>
+  </form>
+  <script src="{% static 'blog/js/check_register_form.js' %}"></script>
+{% endblock %}

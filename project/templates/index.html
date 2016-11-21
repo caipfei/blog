@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block style %}
+h1{color:red;}
+{% endblock %}
+
+{% block contentMain%}
+  {{ block.super }}
+  <h1>hello {% if request.user.is_authenticated %}{{ request.user.username }}{% else %}world{% endif %}</h1>
+{% endblock %}
+

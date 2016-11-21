@@ -1,0 +1,75 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+{% block html %}
+ <head>
+ {% block head %}
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="孤狼">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <link rel="shortcut icon" href="{% static 'blog/image/logo.ico' %}" type="image/icon" />
+  <title>{% block title %}首页{% endblock title %}</title>
+  <script src="{% static 'blog/js/html5shiv_v3.7.3.js' %}"></script>
+  <script src="{% static 'blog/js/jquery-3.1.1.min.js' %}"></script>
+
+  <script>
+    $(function(){
+      var nav_top = $('#nav').offset().top
+      $(window).scroll(function(){
+        var scroll_top = $(this).scrollTop()
+        if(scroll_top >= nav_top){
+          $('#header').css({'position':'fixed','top':-70,'z-index':999})
+        }else{
+          $('#header').css('position','static')
+        }
+      })
+    })
+  </script>
+  <link rel='stylesheet' href="{% static 'blog/css/base.css' %}" type='text/css'>
+  <style>
+  {% block style %}
+    
+  {% endblock style %}
+  </style>
+ {% endblock head %}
+ </head>
+ <body>
+ {% block body %}
+  <a name="top"></a>
+  <header id='header'>
+  {% block header %}
+    <div id="logo">
+     <a href="{% url 'index' %}"><image src="{% static 'blog/image/logo.png' %}" height="60px"></a>
+    </div>
+    <nav id='nav'>
+      <span id="nav_link">
+      <a href="{% url 'index' %}">首页</a>
+      <a href="{% url 'index' %}">博客</a>
+      </span>
+      <span id="nav_user">
+      {% if request.user.is_authenticated %}
+        <a href="">{{ user.username }}</a>
+        <a href="{% url 'blog:logout' %}">注销</a>
+      {% else %}
+        <a href="{% url 'blog:login' %}">登录</a>
+      {% endif %}
+        <a href="{% url 'blog:register' %}">注册</a>
+      </span>
+    </nav>
+  {% endblock header %}
+  </header>
+  <section id='content'>
+  {% block section %}
+    <div id='content-left'>{% block contentLeft %}{% endblock contentLeft %}</div>
+    <div id='content-main'>{% block contentMain %}{% endblock contentMain %}</div>
+    <div id='content-right'>{% block contentRight %}{% endblock contentRight %}</div>
+  {% endblock section %}
+  </section>
+  <footer id='footer'>{% block footer %}{% endblock footer %}</footer>
+  
+ {% endblock body %}
+ </body>
+{% endblock html %}
+</html>

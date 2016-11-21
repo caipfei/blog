@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block style %}
+  {{ block.super }}
+  #login_form{width:240px;
+           /*   border:1px solid red;*/
+              margin:50px auto;}
+  .input{width:200px;
+         padding:4px 2px;
+         margin-bottom:10px;
+         font-size:20px;
+         }
+  #id_remember_me{width:20px;height:20px;vertical-align:middle;}
+  #sbt{color:#904;
+       font-weight:bold;
+       width:100px;
+       font-size:18px;
+       padding:5px;
+       margin:10px 0px;
+       cursor:pointer;}
+  #messages{list-style:none;}
+  #messages li{color:red;}
+{% endblock %}
+
+{% block contentMain %}
+<form action="" method="post" id="login_form" autocomplete="off">
+  {% csrf_token %}
+  {% if messages %}
+    <ul id="messages">
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <label>用户名</label><br />
+  {{ form.username }}<br />
+  <label>密码</label><br />
+  {{ form.password }}<br />
+  <label>{{ form.remember_me }} 10天内自动登陆</label><br />
+  <input type="hidden" name="next" value="{{ next|escape }}" />
+  
+  <input type="submit" value="登录" id="sbt">
+</form>
+<script>
+  document.getElementById('id_password').onfocus = function(){
+    document.getElementById('messages').innerHTML = ''
+  }
+</script>
+{% endblock %}
+
+
+

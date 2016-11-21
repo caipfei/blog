@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block style %}
+  {{ block.super }}
+  #user_nav a{text-decoration:none;}
+  #user_nav a:hover{color:#f60;}
+  #follow{list-style:none;
+          overflow:hidden;
+          margin-bottom:20px;
+         }
+  #follow li{display:inline-block;
+             width:60px;
+             text-align:center;
+             }
+  #follow li a strong{display:inline-block;
+                      word-wrap:break-word;
+                      width:60px;
+                     }
+  #avatar_nav{list-style:none;}
+  #avatar_nav li{height:30px;
+                 line-height:20px;
+                 }
+{% endblock %}
+
+{% block contentLeft %}
+  <div id="user_nav">
+    <div id="user_avatar">
+      <img src="{% static 'blog/image/simple_avatar.gif' %}" alt="用户头像" class="img_avatar" width="180px" /><br />
+      <ul id="follow">
+        <li style="border-right:1px solid #bbb;"><a href="javascript:void(0)"><strong>0</strong><br />关注</a></li>
+        <li style="border-right:1px solid #bbb"><a href="javascript:void(0)"><strong>0</strong><br />粉丝</a></li>
+        <li><a href="javascript:void(0)"><strong>0</strong><br />博客</a></li>
+      </ul>
+      <ul id="avatar_nav">
+        <li><a href="javascript:void(0)">我的主页</a></li>
+        <li><a href="javascript:void(0)">个人资料</a></li>
+        <li><a href="javascript:void(0)">发表博客</a></li>
+      </ul>
+    </div>
+  </div>
+{% endblock %}

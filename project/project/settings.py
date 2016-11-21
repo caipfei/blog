@@ -138,6 +138,9 @@ LOGIN_URL = '/blog/login/'
 #更改默认登陆后跳转url
 LOGIN_REDIRECT_URL = '/'
 
+#更改认证的User模型
+AUTH_USER_MODEL = "blog.MyUser"
+
 
 
 

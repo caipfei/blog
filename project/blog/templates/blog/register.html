@@ -16,11 +16,16 @@
               }
   .field_error{color:red;}
   .field_info{font-size:14px;}
+  .error_info{color:red;}
   #sbt{width:80px;
        height:30px;
        font-size:20px;
        font-weight:bold;
        cursor:pointer;}
+{% endblock %}
+
+{% block title %}
+  注册用户
 {% endblock %}
 
 {% block contentMain %}
@@ -36,7 +41,21 @@
         {% for error in form.username.errors %}
           <tr>
             <td class="field_label"></td>
-            <td colspan=2>{{ error }}</td>
+            <td colspan=2 class="error_info">{{ error }}</td>
+          </tr>
+        {% endfor %}
+      {% endif %}
+      
+      <tr>
+        <td class="field_label">昵&nbsp;&nbsp;称：</td>
+        <td class="field" >{{ form.nick }}</td>
+        <td class="field_error" id="nick_error"></td>
+      </tr>
+      {% if form.nick.errors %}
+        {% for error in form.nick.errors %}
+          <tr>
+            <td class="field_label"></td>
+            <td colspan=2 class="error_info">{{ error }}</td>
           </tr>
         {% endfor %}
       {% endif %}
@@ -50,7 +69,7 @@
         {% for error in form.password1.errors %}
           <tr>
             <td class="field_label"></td>
-            <td colspan=2>{{ error }}</td>
+            <td colspan=2 class="error_info">{{ error }}</td>
           </tr>
         {% endfor %}
       {% endif %}
@@ -64,7 +83,7 @@
         {% for error in form.password2.errors %}
           <tr>
             <td class="field_label"></td>
-            <td colspan=2>{{ error }}</td>
+            <td colspan=2 class="error_info">{{ error }}</td>
           </tr>
         {% endfor %}
       {% endif %}
@@ -78,7 +97,7 @@
         {% for error in form.email.errors %}
           <tr>
             <td class="field_label"></td>
-            <td colspan=2>{{ error }}</td>
+            <td colspan=2 class="error_info">{{ error }}</td>
           </tr>
         {% endfor %}
       {% endif %}

@@ -22,6 +22,10 @@
   #messages li{color:red;}
 {% endblock %}
 
+{% block title %}
+  用户登录
+{% endblock %}
+
 {% block contentMain %}
 <form action="" method="post" id="login_form" autocomplete="off">
   {% csrf_token %}

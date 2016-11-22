@@ -6,6 +6,6 @@ h1{color:red;}
 
 {% block contentMain%}
   {{ block.super }}
-  <h1>hello {% if request.user.is_authenticated %}{{ request.user.username }}{% else %}world{% endif %}</h1>
+  <h1>hello {% if request.user.is_authenticated %}{{ request.user.nick }}{% else %}world{% endif %}</h1>
 {% endblock %}
 

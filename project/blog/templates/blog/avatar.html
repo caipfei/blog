@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block style %}
+  #big_img{width:400px;
+           height:400px;
+           background-color:#f0f0ee;
+           border:1px solid #ccc;
+           display:table-cell;
+           }
+  #img_right{width:200px;
+             height:400px;
+             display:table-cell;
+             position:relative;}
+  #mid_img{width:180px;
+           height:180px;
+           background:#f0f0ee;
+           position:absolute;
+           bottom:0px;
+           margin-left:10px;}
+  #mid_img_text,#small_img_text{width:180px;
+                height:16px;
+                font-size:14px;
+                line-height:16px;
+                position:absolute;
+                margin-left:10px;
+                bottom:185px;}
+  #small_img_text{bottom:260px;}
+  #small_img{width:48px;
+             height:48px;
+             background:#f0f0ee;
+             position:absolute;
+             margin-left:10px;
+             bottom:210px;
+             }
+  #big,#middl,#small{width:100%;height:100%;}
+  #bt{width:100px;height:30px;font-size:20px;margin:10px 0px;cursor:pointer;}
+{% endblock %}
+
+{% block title %}上传头像{% endblock %}
+
+{% block contentMain %}
+  <div style="margin-top:10px;">
+    <form action='' method="post" enctype="multipart/form-data" onsubmit="return check_submit()">
+      {% csrf_token %}
+      {{ form.avatar }}<br />
+      <span>(是能上传单张5M以下的jgp、gif、png图片)</span>
+      <div id="big_img"><img src="" id="big" /></div>
+      <div id="img_right">
+        <div id="mid_img_text">180px x 180px</div>
+        <div id="mid_img"><img src="" id="middl" /></div>
+        <div id="small_img_text">48px x 48px</div>
+        <div id="small_img"><img src="" id="small" /></div>
+      </div>
+      <input type="submit" value="保存" id="bt">
+    </form>
+  </div>
+  <script>
+    var image = document.getElementById('id_avatar')
+    function check_submit(){
+      var size = image.files[0].size
+      if (size > 5*1024*1024)
+      {
+        alert('图片文件太大')
+        return false
+      }
+    }
+    image.onchange = function(){
+      if (! image.value.match(/.jpg|.png|.gif/))
+      {
+        alert('请选择.jpg、.png、.gif格式的图片')
+        image.value=null
+        return false
+      }
+      var f = image.files[0]
+      var src = window.URL.createObjectURL(f)
+      document.getElementById('big').src=src
+      document.getElementById('middl').src=src
+      document.getElementById('small').src=src
+    }
+    
+  </script>
+{% endblock %}

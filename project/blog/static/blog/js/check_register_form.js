@@ -15,6 +15,17 @@ function check_register(){
 		$('#username_error').html('用户名不能全为数字组成')
 		return false
 	}
+	var nick = $.trim('#nick').val()
+	if (! nick)
+	{
+		$('#nick_error').html('昵称不能为空')
+		return false
+	}
+	if (nick.length<3)
+	{
+		$('#nick_error').html('昵称不能少于三个字符')
+		return false
+	}
 	var password1 = $.trim($('#password1').val())
 	if (! password1)
 	{
@@ -39,12 +50,18 @@ function check_register(){
 	}
 	var reg = new RegExp('^(.+?)@(.+?)\\.(.+?)$')
 	var email = $.trim($('#email').val())
-	if (email && ! email.match(reg))
+	if (！ email)
+	{
+		$('#email_error').html('邮箱不能为空')
+		return false
+	}
+	if (! email.match(reg))
 	{
 		$('#email_error').html('邮箱格式不正确')
 		return false
 	}
 }
+
 var field = $('.field input')
 var field_error = $('.field_error')
 field.each(function(i){
@@ -103,3 +120,6 @@ function getCookie(name) {
     }  
     return cookieValue;  
 }  
+
+
+

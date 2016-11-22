@@ -131,6 +131,7 @@ STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
 #设置session会话保存时间为10天
 SESSION_COOKIE_AGE = 10*24*60*60
+#设置关闭浏览器后session失效
 #SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 #更改默认的登录url
@@ -140,6 +141,10 @@ LOGIN_REDIRECT_URL = '/'
 
 #更改认证的User模型，blog是app的名字
 AUTH_USER_MODEL = "blog.MyUser"
+
+#配置上传文件路径
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 
 

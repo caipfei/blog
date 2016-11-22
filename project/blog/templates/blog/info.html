@@ -1,0 +1,43 @@
+{% extends 'blog/home.html' %}
+
+{% block title %}个人资料{% endblock %}
+
+{% block style %}
+  {{ block.super }}
+  #user_info{width:400px;
+             height:300px;
+            /* border:1px solid red;*/
+             padding-top:30px;
+             padding-left:100px
+             }
+  #user_info table{width:100%;height:100%;}
+  #user_info table tr{height:30px;line-height:30px;font-size:20px;}
+  tr td:first-child{width:120px;font-weight:bold;}
+{% endblock %}
+
+{% block contentMain %}
+  <div id="user_info">
+    <table>
+      <tr>
+        <td>用户名：</td>
+        <td>{{ request.user.username }}</td>
+      </tr>
+      <tr>
+        <td>昵称：</td>
+        <td>{{ request.user.nick }}</td>
+      </tr>
+      <tr>
+        <td>邮箱：</td>
+        <td>{{ request.user.email }}</td>
+      </tr>
+      <tr>
+        <td>上次登录：</td>
+        <td>{{ request.user.last_login }}</td>
+      </tr>
+      <tr>
+        <td>注册日期：</td>
+        <td>{{ request.user.date_joined }}</td>
+      </tr>
+    </table>
+  </div>
+{% endblock %}

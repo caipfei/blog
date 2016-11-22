@@ -9,5 +9,8 @@ urlpatterns = [
     url(r'^logout/$',views.logout_view,name="logout"),
     url(r'^check_user/$',views.check_username,name="check_user"),
     url(r'^test/$',views.test),
-    url(r'^home/$',views.home,name="home")
+    url(r'^home/$',views.home,name="home"),
+    url(r'^avatar/$',views.avatar,name="avatar"),
+    url(r'^info/$',views.info,name='info'),
+    url(r'^post/$',views.post_blog,name="post")
 ]

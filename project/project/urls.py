@@ -20,15 +20,15 @@ from django.conf import settings
 from blog import views as blog_view
 from django.views.static import serve
 from django.contrib.auth.views import login,logout
+from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',views.index,name="index"),
     url(r'^static/(?P<path>.*)/$',serve,{'document_root':settings.STATIC_ROOT}),
     url(r'blog/',include('blog.urls',namespace="blog")),
-  #  url(r'^login/$',login,{'template_name':'blog/login.html'},name='login')
 ]
-
+urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 
 
 

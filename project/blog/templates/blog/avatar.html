@@ -47,7 +47,7 @@
       <div id="big_img"><img src="" id="big" /></div>
       <div id="img_right">
         <div id="mid_img_text">180px x 180px</div>
-        <div id="mid_img"><img src="" id="middl" /></div>
+        <div id="mid_img"><img src="{% if request.user.avatar %}{{ request.user.avatar.url }}{% endif %}" id="middl" /></div>
         <div id="small_img_text">48px x 48px</div>
         <div id="small_img"><img src="" id="small" /></div>
       </div>

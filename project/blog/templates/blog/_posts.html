@@ -1,0 +1,18 @@
+{% load staticfiles %}
+{% for post in posts %}
+  <div style="width:100%;margin:20px 0;padding-bottom:10px;border-bottom:1px dotted #ccc;overflow:hidden;">
+    <div style="width:48px;height:48px;float:left;">
+      <a href="{% url 'blog:userInfo' id=post.author.id %}"><img src="{% if post.author.avatar %}{{ post.author.avatar.url }}{% else %}{% static 'blog/image/simple_avatar.gif' %}{% endif %}" alt="用户头像" width="48px" height="48px" /></a>
+    </div>
+    <div style="float:left;margin-left:10px;width:700px;">
+      <div style="margin-bottom:5px;"><h4><a href="{% url 'blog:post' id=post.id %}" class="post_link">{{ post.title }}</a></h4></div>
+      <textarea style="width:100%;resize:none;overflow:hidden;border:none;font-size:14px;" >{{ post.abstract }}</textarea>
+      <div style="margin-top:5px;font-size:14px;color:#555;">
+        <span><a href="{% url 'blog:userInfo' id=post.author.id %}" class="post_link">{{ post.author.nick }}</a>发布于{{ post.timestamp }}</span>
+        <span class="post_comment"><a href="javascript:void(0)" target="_blank" class="comment_link">评论(0)</a></span>
+      </div>
+    </div>
+  </div>
+{% empty %}
+<p>暂无博客发表</p>
+{% endfor %}

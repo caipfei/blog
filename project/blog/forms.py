@@ -5,6 +5,8 @@ from django import forms
 from blog.models import MyUser
 from django.contrib.auth.password_validation import validate_password
 import re
+from ckeditor.fields import RichTextFormField
+from ckeditor.widgets import CKEditorWidget
 
 class RegisterForm(forms.Form):
     username = forms.CharField(label="用户名",min_length=3,max_length=150,
@@ -60,4 +62,15 @@ class AvatarForm(forms.Form):
 
 
 
- 
+
+
+
+
+
+
+
+
+
+
+
+    

@@ -5,7 +5,11 @@ h1{color:red;}
 {% endblock %}
 
 {% block contentMain%}
-  {{ block.super }}
-  <h1>hello {% if request.user.is_authenticated %}{{ request.user.nick }}{% else %}world{% endif %}</h1>
+ <div>
+  {% include 'blog/_posts.html' %}
+ </div>
+ {{ paginator.num_pages }}
+ {% for p in paginator.page_range %}
+ {{ p }}{% endfor %}
 {% endblock %}
 

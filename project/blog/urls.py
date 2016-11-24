@@ -12,5 +12,8 @@ urlpatterns = [
     url(r'^home/$',views.home,name="home"),
     url(r'^avatar/$',views.avatar,name="avatar"),
     url(r'^info/$',views.info,name='info'),
-    url(r'^post/$',views.post_blog,name="post")
+    url(r'^postBlog/$',views.postBlog,name="postBlog"),
+    url(r'^posts/(?P<id>\d+)/$',views.post,name="post"),
+    url(r'^user/(?P<id>\d+)/$',views.userInfo,name='userInfo')
+    
 ]

@@ -6,11 +6,12 @@ body{font-family:宋体,SimSun}
 		overflow:hidden;
 /*		background:black;*/
 		}
-#header #logo{height:70px;
+#header #logo{height:68px;
+			  width:1200px;
+			  margin:0 auto;
 			  }
 #logo a{display:inline-block;
 		height:100%;
-		margin-left:80px;
 		}
 #logo a img{height:100%;}
 #header nav{height:35px;

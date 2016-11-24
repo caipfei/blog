@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -146,7 +147,30 @@ AUTH_USER_MODEL = "blog.MyUser"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
+#配置ckeditor富文本编辑器,该选项的作用是设定通过ckeditor所上传
+#的文件的存放目录，它是MEDIA_ROOT目录下的子目录
+CKEDITOR_UPLOAD_PATH = 'article_images'
+#CKEDITOR_IMAGE_BACKEND = 'pillow'
 
+#设置ckeditor的工具栏
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': (
+			['div','Source','-','Save','NewPage','Preview','-','Templates'], 
+			['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print','SpellChecker','Scayt'], 
+			['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'], 
+			['Form','Checkbox','Radio','TextField','Textarea','Select','Button', 'ImageButton','HiddenField'], 
+			['Bold','Italic','Underline','Strike','-','Subscript','Superscript'], 
+			['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'], 
+			['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'], 
+			['Link','Unlink','Anchor'], 
+			['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'], 
+			['Styles','Format','Font','FontSize'], 
+			['TextColor','BGColor'], 
+			['Maximize','ShowBlocks','-','About', 'pbckcode'],
+		),
+	}
+}
 
 
 

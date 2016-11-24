@@ -14,7 +14,7 @@
   <script src="{% static 'blog/js/html5shiv_v3.7.3.js' %}"></script>
   <script src="{% static 'blog/js/jquery-3.1.1.min.js' %}"></script>
 
-  <script>
+ <!-- <script>
     $(function(){
       var nav_top = $('#nav').offset().top
       $(window).scroll(function(){
@@ -26,7 +26,7 @@
         }
       })
     })
-  </script>
+  </script>-->
   <link rel='stylesheet' href="{% static 'blog/css/base.css' %}" type='text/css'>
   <style>
   {% block style %}
@@ -46,7 +46,6 @@
     <nav id='nav'>
       <span id="nav_link">
       <a href="{% url 'index' %}">首页</a>
-      <a href="javascript:void(0)">博客</a>
       </span>
       <span id="nav_user">
       {% if request.user.is_authenticated %}

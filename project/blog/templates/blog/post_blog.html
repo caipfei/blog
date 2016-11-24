@@ -1,0 +1,107 @@
+{% extends 'blog/home.html' %}
+{% load staticfiles %}
+
+{% block style %}
+  {{ block.super }}
+  .post_head{width:100%;
+             height:30px;
+             border-bottom:1px solid #0082c8;
+             margin-bottom:15px;
+             }
+  #post_form{width:100%;}
+  #post_form table{margin:15px 0px;}
+  .label{color:#6d6d6d;
+         font-weight:bold;
+        }
+  #title{width:500px;}
+  #tag{margin:15px 0px;}
+  #tag input{width:500px;}
+  #abstract{width:100%;
+            height:70px;
+            resize:none;
+            font-size:14px;}
+  #pbt{width:100px;
+       height:35px;
+       line-height:35px;
+       text-align:center;
+       cursor:pointer;
+       font-size:20px;
+       font-weight:bold;
+       color:white;
+       background:#79b900;
+       border-radius:3px;
+      }
+{% endblock %}
+
+{% block title %}发表博客{% endblock %}
+{% block head %}
+  {{ block.super }}
+  <script src="{% static 'ckeditor/ckeditor/ckeditor.js'%}"></script>
+{% endblock %} 
+
+{% block contentMain %}
+  <div class="post_head"><h3>发表博文</h3></div>
+    <form action='' method='post' name='post_form' id='post_form' onsubmit="return CheckPost()" autocomplete='off'>
+    {% csrf_token %}
+      <table>
+        <tr>
+          <td width="6%"><label class="label">标题:</label></td>
+          <td width="10%"><select name="genre" id='genre'>
+            <option value="-1">请选择</option>
+            <option value='0'>原创</option>
+            <option value="1">转载</option>
+            </select>
+          </td>
+          <td width="80%"><input type="text" name="title" id="title">
+            <span style="color:#0082c8">(1-50字)</span>
+          </td>
+        </tr>
+      </table>
+      <textarea id="ckeditor1" name='content'></textarea>
+      <div id="tag">
+        <label class="label">标签:&nbsp;</label><input type="text" name="tag" id="keyword" />(多个标签之间以,隔开)<br />
+      </div>
+      <div class="post_head">
+        <h4 style="display:inline-block;">文章摘要</h4>
+        <span style="color:#6d6d6d;">(博客首页默认显示的内容)</span>
+      </div>
+      <textarea name="abstract" id='abstract'></textarea><br />
+      <input type="submit" value="发表" id="pbt" />
+    </form>
+  <script>
+    var ckeditor = CKEDITOR.replace('ckeditor1',{width:'100%',height:'500px'})
+  </script>
+  <script>
+    function CheckPost(){
+      var genre = document.getElementById('genre')
+      if (genre.value == '-1')
+      {
+        alert('请选择文章创作类型！')
+        return false
+      }
+      var title = document.getElementById('title')
+      if (title.value.trim() == '')
+      {
+        alert('标题不能为空！')
+        return false
+      }
+      if (CKEDITOR.instances.ckeditor1.getData()=='')
+      {
+        alert('文章内容不能为空！')
+         return false
+      }
+      var tag = document.getElementById('keyword')
+      if (keyword.value.trim()=='')
+      {
+        alert('标签不能为空')
+        return false
+      }
+      var abstract = document.getElementById('abstract')
+      if (abstract.value==null || abstract.value.trim()=='')
+      {
+        alert('摘要不能为空！')
+        return false;
+      }
+    }
+  </script>
+{% endblock %}

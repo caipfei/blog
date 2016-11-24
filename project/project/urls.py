@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^$',views.index,name="index"),
     url(r'^static/(?P<path>.*)/$',serve,{'document_root':settings.STATIC_ROOT}),
     url(r'blog/',include('blog.urls',namespace="blog")),
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 

@@ -1,0 +1,8 @@
+{% extends 'blog/post.html' %}
+
+{% block contentMain %}
+  <div>
+    <div style="width:100%;height:30px;border-bottom:1px solid #0082c8"><h3>{% ifequal user request.user %}我{% else %}他{% endifequal %}的博客</h3></div>
+    {% include 'blog/_posts.html' %}
+  </div>
+{% endblock %}

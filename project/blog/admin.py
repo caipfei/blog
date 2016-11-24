@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django import forms
-from blog.models import MyUser
+from blog.models import MyUser,Post
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
@@ -57,9 +57,17 @@ class MyUserAdmin(UserAdmin):
                                   'email','is_active','is_staff','is_superuser','groups','user_permissions'),}),)
         return super(MyUserAdmin,self).changelist_view(request,extra_context)
 
+class PostAdmin(admin.ModelAdmin):
+    list_display = ('title','author','tag','genre','timestamp')
+    search_fields = ('tag','title','content','author')
+    ordering = ('-timestamp',)
+    date_hierarchy = 'timestamp'
+    raw_id_fields = ('author',)
+    
+        
 #将新定义的模型注册        
 admin.site.register(MyUser,MyUserAdmin)
-
+admin.site.register(Post,PostAdmin)
 
 
 

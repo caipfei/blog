@@ -2,7 +2,8 @@ from django.shortcuts import render,render_to_response,get_object_or_404
 from django.http import HttpResponse,HttpResponseRedirect,JsonResponse,Http404
 from .forms import RegisterForm,LoginForm,AvatarForm
 #from django.contrib.auth.models import User
-from blog.models import MyUser,Post
+from django.contrib.auth.models import AnonymousUser
+from blog.models import MyUser,Post,Comment,Follow
 from django.template.context_processors import csrf
 from json import loads
 from django.contrib.auth import authenticate,login,logout
@@ -26,6 +27,7 @@ def register(request):
             user.set_password(password)
             user.is_active = True
             user.save()
+            user.follow(user)
             messages.info(request,'注册成功，请登录')
             return HttpResponseRedirect(reverse('blog:login'))
         else:
@@ -54,6 +56,7 @@ def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
+            human = True
             data = form.cleaned_data
             username = data.get('username','')
             password = data.get('password','')
@@ -88,7 +91,8 @@ def test(request):
     
 @login_required
 def home(request):
-    paginator = Paginator(Post.objects.filter(author=request.user).all(),20)
+    followers = MyUser.objects.filter(fans__follower=request.user).all()
+    paginator = Paginator(Post.objects.filter(author__in=followers).order_by('-timestamp').all(),20)
     page = request.GET.get('page',1)
     try:
         posts = paginator.page(page)
@@ -140,8 +144,13 @@ def post(request,id):
     except:
         raise Http404()
     p = get_object_or_404(Post,id=id)
+    comments = Comment.objects.filter(post=p).order_by('timestamp').all()
     user = p.author
-    return render(request,'blog/post.html',{'post':p,'user':user})
+    if not isinstance(request.user,AnonymousUser) and request.user.is_following(user):
+        is_follow = 1
+    else:
+        is_follow = 0
+    return render(request,'blog/post.html',{'post':p,'user':user,'comments':comments,'is_follow':is_follow})
 
 def userInfo(request,id):
     try:
@@ -155,15 +164,71 @@ def userInfo(request,id):
         posts = paginator.page(page)
     except InvalidPage:
         posts = paginator.page(1)
-    # if user==request.user:
-        # return HttpResponseRedirect(reverse('blog:home'))
-    return render(request,'blog/user.html',{'user':user,'posts':posts})
+    if not isinstance(request.user,AnonymousUser) and request.user.is_following(user):
+        is_follow = 1
+    else:
+        is_follow = 0
+    return render(request,'blog/user.html',{'user':user,'posts':posts,'is_follow':is_follow})
 
-
-
-
-
-
+@login_required
+def comment(request):
+    if request.method=='POST':
+        body = request.POST.get('body')
+        post_id = request.POST.get('post_id')
+        post = Post.objects.get(id=post_id)
+        comment = Comment(author=request.user,post=post,body=body)
+        comment.save()
+        return HttpResponseRedirect(reverse('blog:post',kwargs={'id':post_id}))
+        
+@login_required
+def follow(request,id):
+    try:
+        id = int(id)
+    except:
+        raise Http404()
+    user = get_object_or_404(MyUser,id=id)
+    request.user.follow(user)
+    old_url = request.META.get('HTTP_REFERER','/')
+    return HttpResponseRedirect(old_url)
+        
+@login_required
+def unfollow(request,id):
+    try:
+        id = int(id)
+    except:
+        raise Http404()
+    user = get_object_or_404(MyUser,id=id)
+    request.user.unfollow(user)
+    old_url = request.META.get('HTTP_REFERER','/')
+    return HttpResponseRedirect(old_url)
+    
+@login_required
+def follows(request,id):
+    try:
+        id = int(id)
+    except:
+        raise Http404()
+    user = get_object_or_404(MyUser,id=id)
+    follow = user.guanzhu.all()
+    if user == request.user:
+        return render(request,'blog/myFollows.html',{'follow':follow})
+    else:
+        is_follow = 1 if request.user.is_following(user) else 0
+        return render(request,'blog/follow.html',{'follow':follow,'user':user,'is_follow':is_follow})
+        
+@login_required
+def fans(request,id):
+    try:
+        id = int(id)
+    except:
+        raise Http404()
+    user = get_object_or_404(MyUser,id=id)
+    fans = user.fans.all()
+    if user == request.user:
+        return render(request,'blog/myFans.html',{'fans':fans})
+    else:
+        is_follow = 1 if request.user.is_following(user) else 0
+        return render(request,'blog/fans.html',{'fans':fans,'user':user,'is_follow':is_follow})
     
             
 

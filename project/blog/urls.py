@@ -14,6 +14,10 @@ urlpatterns = [
     url(r'^info/$',views.info,name='info'),
     url(r'^postBlog/$',views.postBlog,name="postBlog"),
     url(r'^posts/(?P<id>\d+)/$',views.post,name="post"),
-    url(r'^user/(?P<id>\d+)/$',views.userInfo,name='userInfo')
-    
+    url(r'^user/(?P<id>\d+)/$',views.userInfo,name='userInfo'),
+    url(r'^comment/$',views.comment,name='comment'),
+    url(r'^follow/(?P<id>\d+)/$',views.follow,name="follow"),
+    url(r'^unfollow/(?P<id>\d+)/$',views.unfollow,name="unfollow"),
+    url(r'^user/(?P<id>\d+)/follows/$',views.follows,name="follows"),
+    url(r'^user/(?P<id>\d+)/fans/$',views.fans,name='fans'),
 ]

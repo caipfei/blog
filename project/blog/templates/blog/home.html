@@ -37,8 +37,9 @@
       <h1 style="color:#454545;margin-bottom:10px;">{{ user.nick }}</h1>
       <a href="{% url 'blog:home' %}"><img src="{% if request.user.avatar %}{{ request.user.avatar.url }}{% else%}{% static 'blog/image/simple_avatar.gif' %}{% endif %}" alt="用户头像" class="img_avatar" width="180px" height='180px' /></a><br />
       <ul id="follow">
-        <li style="border-right:1px solid #bbb;"><a href="javascript:void(0)"><strong>0</strong><br />关注</a></li>
-        <li style="border-right:1px solid #bbb"><a href="javascript:void(0)"><strong>0</strong><br />粉丝</a></li>
+        <li style="border-right:1px solid #bbb;"><a href="{% url 'blog:follows' id=request.user.id %}"><strong>{{ request.user.guanzhu.count|add:-1 }}</strong><br />关注</a></li>
+        <li style="border-right:1px solid #bbb"><a href="{% url 'blog:fans' id=request.user.id %}"><strong>
+        {{ request.user.fans.count|add:-1 }}</strong><br />粉丝</a></li>
         <li><a href="{% url 'blog:userInfo' id=request.user.id %}"><strong>{{ request.user.post_set.count }}</strong><br />博客</a></li>
       </ul>
       <ul id="avatar_nav">
@@ -52,7 +53,7 @@
 
 {% block contentMain %}
   <div style="width:100%;height:30px;border-bottom:1px solid #e9eaec;margin-bottom:15px;">
-    <h3 style="color:#178fe6;font-weight:bold;">我的关注</h3>
+    <h3 style="color:#178fe6;font-weight:bold;">关注者博客</h3>
   </div>
   <div>{% include 'blog/_posts.html' %}</div>
 {% endblock %}

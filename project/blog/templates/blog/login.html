@@ -5,7 +5,7 @@
   #login_form{width:240px;
            /*   border:1px solid red;*/
               margin:50px auto;}
-  .input{width:200px;
+  .input,#id_captcha_1{width:200px;
          padding:4px 2px;
          margin-bottom:10px;
          font-size:20px;
@@ -40,6 +40,8 @@
   {{ form.username }}<br />
   <label>密码</label><br />
   {{ form.password }}<br />
+  <label>验证码(点击自动刷新)</label><br />
+  {{ form.captcha }}<br />
   <label>{{ form.remember_me }} 10天内自动登陆</label><br />
   <input type="hidden" name="next" value="{{ next|escape }}" />
   
@@ -48,6 +50,33 @@
 <script>
   document.getElementById('id_password').onfocus = function(){
     document.getElementById('messages').innerHTML = ''
+  }
+</script>
+
+<!--ajax动态刷新验证码-->
+<script>
+  var img = document.getElementsByClassName('captcha')[0]
+  img.style.cursor = 'pointer'
+  img.onclick = function(){
+    var xhr
+    if (window.XMLHttpRequest)
+    {
+      xhr = new XMLHttpRequest()
+    }else{
+      xhr = new ActiveXObject('Microsoft.XMLHTTP')
+    }
+    xhr.onreadystatechange = function(){
+      if (xhr.readyState==4 && xhr.status==200)
+      {
+        var result = JSON.parse(xhr.responseText)
+        img.src=result['image_url']
+        document.getElementById('id_captcha_0').value=result['key']  //这个为隐藏字段
+      }
+    }
+    xhr.open('GET','/captcha/refresh/',true)
+    //必须添加这个HTTP头部，否则后台views中request.is_ajax判断一直为false
+    xhr.setRequestHeader('X-Requested-With','XMLHttpRequest')
+    xhr.send()
   }
 </script>
 {% endblock %}

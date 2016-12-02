@@ -41,7 +41,8 @@
   <header id='header'>
   {% block header %}
     <div id="logo">
-     <a href="{% url 'index' %}"><image src="{% static 'blog/image/logo.png' %}" height="60px"></a>
+     <a href="{% url 'index' %}"><image src="{% static 'blog/image/logo.png' %}" height="60px" ></a>
+     
     </div>
     <nav id='nav'>
       <span id="nav_link">
@@ -53,8 +54,9 @@
         <a href="{% url 'blog:logout' %}">注销</a>
       {% else %}
         <a href="{% url 'blog:login' %}">登录</a>
-      {% endif %}
         <a href="{% url 'blog:register' %}">注册</a>
+      {% endif %}
+        
       </span>
     </nav>
   {% endblock header %}

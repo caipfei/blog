@@ -5,11 +5,17 @@
       <a href="{% url 'blog:userInfo' id=post.author.id %}"><img src="{% if post.author.avatar %}{{ post.author.avatar.url }}{% else %}{% static 'blog/image/simple_avatar.gif' %}{% endif %}" alt="用户头像" width="48px" height="48px" /></a>
     </div>
     <div style="float:left;margin-left:10px;width:700px;">
-      <div style="margin-bottom:5px;"><h4><a href="{% url 'blog:post' id=post.id %}" class="post_link">{{ post.title }}</a></h4></div>
+      <div style="margin-bottom:5px;">
+        {% if post.genre %}
+        <span style="background:#E23002;color:white;width:30px;height:16px;font-size:12px;display:inline-block;text-align:center;line-height:16px;">转载</span>
+        {% else %}
+        <span style="background:#3F6F02;color:white;width:30px;height:16px;font-size:12px;display:inline-block;text-align:center;line-height:16px;">原创</span>
+        {% endif %}
+        <h4 style="display:inline-block;"><a href="{% url 'blog:post' id=post.id %}" class="post_link" target="_block">{{ post.title }}</a></h4></div>
       <textarea style="width:100%;resize:none;overflow:hidden;border:none;font-size:14px;" >{{ post.abstract }}</textarea>
       <div style="margin-top:5px;font-size:14px;color:#555;">
         <span><a href="{% url 'blog:userInfo' id=post.author.id %}" class="post_link">{{ post.author.nick }}</a>发布于{{ post.timestamp }}</span>
-        <span class="post_comment"><a href="javascript:void(0)" target="_blank" class="comment_link">评论(0)</a></span>
+        <span class="post_comment"><a href="{% url 'blog:post' id=post.id %}#comment" target="_blank" class="comment_link">评论({{ post.comment_set.count }})</a></span>
       </div>
     </div>
   </div>

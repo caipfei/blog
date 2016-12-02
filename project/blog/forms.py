@@ -7,13 +7,14 @@ from django.contrib.auth.password_validation import validate_password
 import re
 from ckeditor.fields import RichTextFormField
 from ckeditor.widgets import CKEditorWidget
+from captcha.fields import CaptchaField
 
 class RegisterForm(forms.Form):
     username = forms.CharField(label="用户名",min_length=3,max_length=150,
         widget=forms.TextInput(attrs={'id':'username','class':'form_field','placeholder':'至少3位字符'}),
         error_messages={'required':'用户名不能为空','min_length':'用户名最少为3位字符'})
-    nick = forms.CharField(label="昵称",min_length=3,max_length=32,widget=forms.TextInput(attrs={'id':'nick',
-        'class':'form_field','placeholder':'至少3位字符'}))
+    nick = forms.CharField(label="昵称",max_length=32,widget=forms.TextInput(attrs={'id':'nick',
+        'class':'form_field'}))
     password1 = forms.CharField(label='密码',min_length=6,widget=forms.PasswordInput(attrs={'id':
         'password1','class':'form_field','placeholder':'至少6位字符'}),error_messages={'required':'密码不能为空',
         'min_length':'密码最小长度为6位'})
@@ -54,6 +55,7 @@ class LoginForm(forms.Form):
     username = forms.CharField(label="用户名",widget=forms.TextInput(attrs={'class':'input',
         'autofocus':'autofocus'}))
     password = forms.CharField(label="密码",widget=forms.PasswordInput(attrs={'class':'input'}))
+    captcha = CaptchaField(label='验证码')
     remember_me = forms.BooleanField(label="记住密码",initial=False,required=False,
         widget=forms.CheckboxInput(attrs={'class':'input'}))
 

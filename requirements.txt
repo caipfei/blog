@@ -2,3 +2,4 @@ Django==1.10.3
 PyMySQL==0.7.9
 django-ckeditor==5.1.1
 Pillow==3.4.2
+django-simple-captcha==0.5.3

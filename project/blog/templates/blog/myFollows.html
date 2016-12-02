@@ -1,0 +1,54 @@
+{% extends 'blog/home.html' %}
+{% load staticfiles %}
+
+{% block style %}
+  {{ block.super }}
+  #myFollowList{list-style:none;
+                overflow:hidden;
+                }
+  #myFollowList a{text-decoration:none;
+                  color:#3da9f7;
+                  }
+  #myFollowList li{float:left;
+                   width:280px;
+                   height:100px;
+                   margin:10px 0 0 10px;
+                   padding:16px 0 16px 16px;
+                   background:#f2f2f5;
+                   }
+  #myFollowList .list_div{display:inline-block;
+                          vertical-align:top;
+                          margin-right:10px;
+                          }
+  .followInfo div{margin-bottom:8px;}
+  .followInfo label{color:#999999;}
+{% endblock %}
+
+{% block contentMain %}
+  <div style="width:100%;height:30px;border-bottom:1px solid #e9eaec;margin-bottom:15px;">
+    <h3 style="color:#178fe6;font-weight:bold;">我的关注{{ request.user.guanzhu.count|add:-1 }}</h3>
+  </div>
+  {% if follow.count|add:-1 %}
+    <ul id="myFollowList">
+    {% for f in follow %}
+      {% ifnotequal f.followed request.user %}
+      <li>
+        <div class="followAvatar list_div">
+          <a href="{% url 'blog:userInfo' id=f.followed.id %}"><img src="{% if f.followed.avatar %}{{ f.followed.avatar.url }}{% else %}{% static 'blog/image/simple_avatar.gif' %}{% endif %}" alt="用户头像" width="80px" height='80px' /></a>
+        </div>
+        <div class='followInfo list_div'>
+          <div><h4>{{ f.followed.nick }}</h4></div>
+          <div>
+            <label>关注:<a href="{% url 'blog:follows' id=f.followed.id %}">{{ f.followed.guanzhu.count|add:-1 }}</a></label> |
+            <label>粉丝:<a href="{% url 'blog:fans' id=f.followed.id %}">{{ f.followed.fans.count|add:-1 }}</a></label>
+          </div>
+          <div><a href="{% url 'blog:unfollow' id=f.followed.id %}">取消关注</a></div>
+        </div>
+      </li>
+      {% endifnotequal %}
+    {% endfor %}
+    </ul>
+  {% else %}
+  暂无关注
+  {% endif %}
+{% endblock %}

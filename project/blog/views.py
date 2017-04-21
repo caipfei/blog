@@ -42,6 +42,8 @@ def register(request):
     c.update(csrf(request))
     return render(request,'blog/register.html',c)
 
+
+
 def check_username(request):
     if request.method == 'POST':
         data = loads(request.body.decode('utf-8'))

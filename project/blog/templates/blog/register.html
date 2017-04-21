@@ -29,6 +29,8 @@
 {% endblock %}
 
 {% block contentMain %}
+  <script src="{% static 'blog/js/check_register_form.js' %}"></script>
+
   <form action='' method="post" autocomplete="off" id="register_form" onsubmit="return check_register()">
     {% csrf_token %}
     <table>
@@ -108,5 +110,4 @@
       </tr>
     </table>
   </form>
-  <script src="{% static 'blog/js/check_register_form.js' %}"></script>
 {% endblock %}
